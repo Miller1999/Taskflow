@@ -1,8 +1,22 @@
 from fastapi import FastAPI
+from sqlalchemy.orm import Session
+from backend import models, database
+from sqlalchemy import text
 
 app = FastAPI()
 
+database.Base.metadata.create_all(bind=database.engine)
 
-@app.get("/")
-def read_root():
-    return {"message": "TaskFlow API is running!"}
+
+@app.get("/health")
+def health_check():
+    db: Session = database.SessionLocal()
+    try:
+        db.execute(
+            text("SELECT 1")
+        )  # Se usa text() para compatibilidad con SQLAlchemy 2.0
+        return {"status": "OK", "message": "DB Connected"}
+    except Exception as e:
+        return {"status": "ERROR", "message": str(e)}
+    finally:
+        db.close()
