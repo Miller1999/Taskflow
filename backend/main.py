@@ -2,10 +2,15 @@ from fastapi import FastAPI
 from sqlalchemy.orm import Session
 from backend import models, database
 from sqlalchemy import text
+from .routers import users, projects, tasks
 
 app = FastAPI()
 
 database.Base.metadata.create_all(bind=database.engine)
+
+app.include_router(users.router)
+app.include_router(projects.router)
+app.include_router(tasks.router)
 
 
 @app.get("/health")
