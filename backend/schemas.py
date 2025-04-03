@@ -18,7 +18,7 @@ class UserResponse(BaseModel):
     name: str
     email: EmailStr
 
-    class Config:
+    class ConfigDict:
         from_attributes = True
 
 
@@ -31,7 +31,7 @@ class ProjectCreate(BaseModel):
 class ProjectResponse(ProjectCreate):
     id: int
 
-    class Config:
+    class ConfigDict:
         from_attributes = True
 
 
@@ -51,7 +51,7 @@ class TaskCreate(BaseModel):
 class TaskResponse(TaskCreate):
     id: int
 
-    class Config:
+    class ConfigDict:
         from_attributes = True
 
 
